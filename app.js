@@ -242,11 +242,30 @@ class FusionRoom {
 
     handleUserJoined(data) {
         this.userCount.textContent = (parseInt(this.userCount.textContent) + 1).toString();
+        
+        // Add the new user to the users list
+        const userElement = document.createElement('div');
+        userElement.className = 'user-item';
+        userElement.setAttribute('data-user-id', data.userId);
+        userElement.innerHTML = `
+            <div class="user-avatar">${data.userName.charAt(0).toUpperCase()}</div>
+            <div class="user-name">${data.userName}</div>
+            <div class="user-status"></div>
+        `;
+        this.usersList.appendChild(userElement);
+        
         this.showToast(`${data.userName} joined the room`, 'info');
     }
 
     handleUserLeft(data) {
         this.userCount.textContent = (parseInt(this.userCount.textContent) - 1).toString();
+        
+        // Remove the user from the users list
+        const userElement = this.usersList.querySelector(`[data-user-id="${data.userId}"]`);
+        if (userElement) {
+            userElement.remove();
+        }
+        
         this.showToast(`${data.userName} left the room`, 'info');
     }
 
@@ -259,6 +278,7 @@ class FusionRoom {
         users.forEach(user => {
             const userElement = document.createElement('div');
             userElement.className = 'user-item';
+            userElement.setAttribute('data-user-id', user.id);
             userElement.innerHTML = `
                 <div class="user-avatar">${user.name.charAt(0).toUpperCase()}</div>
                 <div class="user-name">${user.name}</div>
