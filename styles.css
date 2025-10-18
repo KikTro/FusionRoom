@@ -1189,6 +1189,21 @@ body {
     .progress-container {
         order: -1;
         width: 100%;
+        gap: 0.5rem;
+    }
+    
+    .progress-bar {
+        height: 8px;
+        touch-action: none;
+    }
+    
+    .progress-bar:hover {
+        height: 8px;
+    }
+    
+    .progress-fill::after {
+        width: 16px;
+        height: 16px;
     }
     
     .logo {
